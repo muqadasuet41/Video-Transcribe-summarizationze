@@ -1,14 +1,17 @@
-# Step 2: Import required libraries
+# Import necessary libraries
 import streamlit as st
 import whisper
 from transformers import pipeline
 from moviepy.editor import VideoFileClip
+import torch
 
-# Step 3: Load the Whisper model and Summarization pipeline
-transcription_model = whisper.load_model("base")
+# Load the Whisper model and Summarization pipeline
+# Check if CUDA is available for faster processing with GPU
+device = "cuda" if torch.cuda.is_available() else "cpu"
+transcription_model = whisper.load_model("base", device=device)
 summarizer = pipeline("summarization", model="t5-small", tokenizer="t5-small")
 
-# Step 4: Define a function to transcribe video
+# Function to transcribe video
 def transcribe_video(video_path):
     # Extract audio from video
     video = VideoFileClip(video_path)
@@ -19,13 +22,13 @@ def transcribe_video(video_path):
     transcription = transcription_model.transcribe(audio_path)
     return transcription['text']
 
-# Step 5: Define a function to summarize the transcribed text
+# Function to summarize the transcribed text
 def summarize_text(text):
     # Use the summarization pipeline to summarize the text
     summary = summarizer(text, max_length=50, min_length=25, do_sample=False)
     return summary[0]['summary_text']
 
-# Step 6: Create the Streamlit app
+# Streamlit app function
 def main():
     st.title("Video Transcription and Summarization App")
     st.write("Upload a video file to get its text transcription and summary.")
