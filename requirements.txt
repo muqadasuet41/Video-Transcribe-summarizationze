@@ -1,0 +1,6 @@
+transformers==4.31.0
+openai-whisper
+streamlit==1.26.0
+moviepy==1.0.3
+torch  # Ensure torch is installed for Whisper to work
+
