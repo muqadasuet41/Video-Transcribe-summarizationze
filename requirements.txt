@@ -3,6 +3,7 @@ openai-whisper
 streamlit==1.26.0
 moviepy==1.0.3
 torch
-pillow==9.1.0  # Specify an older version compatible with streamlit
-tokenizers==0.13.3  # Version compatible with transformers 4.31.0
+pillow==8.4.0  # Use an older version that is more compatible
+tokenizers==0.13.2  # This version is often compatible with transformers
+
 
